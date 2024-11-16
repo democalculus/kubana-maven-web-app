@@ -40,7 +40,7 @@ spec:
               - mpm
       containers:
       - name: mss-maven-con
-        image: eagunuworld/mss-us-east-2-web-prod:v40
+        image: image_version_update
         ports:
         - containerPort: 8080
         # readinessProbe:
