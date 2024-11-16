@@ -3,7 +3,7 @@
 
 pipeline {
 
-  agent { label 'NodeOne' }
+  agent { label 'eagunu-slave-agent' }
 
   options {
        buildDiscarder logRotator(
@@ -33,7 +33,7 @@ pipeline {
     // This can be http or https
     NEXUS_PROTOCOL = "http"
     // Where your Nexus is running
-    NEXUS_URL = "3.143.172.151:8081"
+    NEXUS_URL = "3.133.146.2:8081"
     // Repository where we will upload the artifact
     NEXUS_REPOSITORY = "kubana-maven-web-application"
     // Jenkins credential id to authenticate to Nexus OSS
@@ -52,7 +52,7 @@ pipeline {
   stages {
     stage('Cloning Git') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/mss-us-east-2-web-prod']], extensions: [], userRemoteConfigs: [[credentialsId: 'democalculus-github-login-creds', url: 'https://github.com/democalculus/mss-us-east-2-web-prod.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/prod-master']], extensions: [], userRemoteConfigs: [[credentialsId: 'democalculus-github-login-creds', url: 'https://github.com/democalculus/kubana-maven-web-app.git']]])
             }
         }
 
