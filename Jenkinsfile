@@ -33,7 +33,7 @@ pipeline {
     // This can be http or https
     NEXUS_PROTOCOL = "http"
     // Where your Nexus is running
-    NEXUS_URL = "3.139.108.93:8081"
+    NEXUS_URL = "3.137.176.145:8081"
     // Repository where we will upload the artifact
     NEXUS_REPOSITORY = "kubana-maven-web-application"
     // Jenkins credential id to authenticate to Nexus OSS
@@ -154,18 +154,25 @@ pipeline {
            }
          }
 
-    stage('maven_web_app_execute Deployment') {
-            steps {
-              parallel(
-                "Deployment": {
-                     sh 'bash maven_web_app_execute.sh'
-                    },
-                    "Rollout Status": {
-                      sh 'bash maven-web-app-rollout.sh'
-                        }
-                      )
-                    }
-                }
+  stage('kubernetes version 2') {
+               steps {
+                withKubeConfig([credentialsId: 'us-east-2-prod-eksdemo']) {
+                   sh "bash maven_web_app_execute.sh"
+                 }
+               }
+             }
+    // stage('maven_web_app_execute Deployment') {
+    //         steps {
+    //           parallel(
+    //             "Deployment": {
+    //                  sh 'bash maven_web_app_execute.sh'
+    //                 },
+    //                 "Rollout Status": {
+    //                   sh 'bash maven-web-app-rollout.sh'
+    //                     }
+    //                   )
+    //                 }
+    //             }
 
   // stage ('Deploying To EKS') {
   //      steps {
